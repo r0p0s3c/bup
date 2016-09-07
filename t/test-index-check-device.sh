@@ -9,7 +9,7 @@ if [ $(t/root-status) != root ]; then
     exit 0 # FIXME: add WVSKIP.
 fi
 
-if test -n "$(type -p modprobe)" && ! modprobe loop; then
+if ! modprobe loop; then
     echo 'Unable to load loopback module; skipping --check-device test.' 1>&2
     exit 0
 fi

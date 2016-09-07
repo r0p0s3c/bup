@@ -35,7 +35,10 @@ def ex(*cmd):
 def setup_testfs():
     assert(sys.platform.startswith('linux'))
     # Set up testfs with user_xattr, etc.
-    if subprocess.call(['modprobe', 'loop']) != 0:
+    try:
+        if subprocess.call(['modprobe', 'loop']) != 0:
+           return False
+    except OSError:
         return False
     subprocess.call(['umount', 'testfs'])
     ex('dd', 'if=/dev/zero', 'of=testfs.img', 'bs=1M', 'count=32')
